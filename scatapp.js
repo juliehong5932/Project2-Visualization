@@ -19,23 +19,23 @@ var svg = d3
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 // Initial Params
-var chosenXAxis = "Firearms Death Rate";
+var chosenXAxis = "firearms_death_rate";
 var chosenYAxis = "percent_hs_grad";
 // function used for updating x-scale var upon click on axis label
-function xScale(healthData, chosenXAxis) {
+function xScale(mergedData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenXAxis]) * 0.8,
-      d3.max(healthData, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(mergedData, d => d[chosenXAxis]) * 0.8,
+      d3.max(mergedData, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
   return xLinearScale;
 }
-function yScale(healthData, chosenYAxis) {
+function yScale(mergedData, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenYAxis]) * 0.8,
-      d3.max(healthData, d => d[chosenYAxis]) * 1.2
+    .domain([d3.min(mergedData, d => d[chosenYAxis]) * 0.8,
+      d3.max(mergedData, d => d[chosenYAxis]) * 1.2
     ])
     .range([height,0]);
   return yLinearScale;
@@ -64,40 +64,40 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
     .attr("cy", d => newYScale(d[chosenYAxis]));
   return circlesGroup;
 }
-function renderStateAbbr(stateAbbr, newXScale, chosenXAxis, newYScale, chosenYAxis) {
-  stateAbbr.transition()
-    .duration(1000)
-    .attr("x", d => newXScale(d[chosenXAxis]))
-    .attr("y", d => newYScale(d[chosenYAxis]));
-  return stateAbbr;
-}
+// function renderStateAbbr(stateAbbr, newXScale, chosenXAxis, newYScale, chosenYAxis) {
+//   stateAbbr.transition()
+//     .duration(1000)
+//     .attr("x", d => newXScale(d[chosenXAxis]))
+//     .attr("y", d => newYScale(d[chosenYAxis]));
+//   return stateAbbr;
+// }
 // function used for updating circles group with new tooltip
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   var labelx;
   var labely;
-  if (chosenXAxis == "Firearms Death Rate ") {
-    labelx = "Firearms Death Rate (%):";
+  if (chosenXAxis == "firearms_death_rate ") {
+    labelx = "firearms_death_rate (%):";
   }
-  else if(chosenXAxis == "state_code") {
-    labelx = "state_code: ";
+  else if(chosenXAxis == "homicide_rate") {
+    labelx = "homicide_rate: ";
   }
   else {
-    labelx = "Median Household Income: $"
+    labelx = "household_size: $"
   }
   if (chosenYAxis == "percent_hs_grad") {
     labely = "percent_hs_grad:";
   }
-  else if(chosenYAxis == "2017-18 Average %") {
-    labely = "2017-18 Average %: ";
+  else if(chosenYAxis == "per_capita_income") {
+    labely = "per_capita_income: ";
   }
   else {
-    labely = "Obesity: "
+    labely = "median_income: "
   }
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
     //.offset([80, -60])
     .html(function(d) {
-      return (`${d.state}<br>${labelx} ${d[chosenXAxis]} <br>${labely} ${d[chosenYAxis]}`);
+      return (`${d.state_code}<br>${labelx} ${d[chosenXAxis]} <br>${labely} ${d[chosenYAxis]}`);
     });
   circlesGroup.call(toolTip);
   circlesGroup.on("mouseover", function(data) {
@@ -109,21 +109,21 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   return circlesGroup;
 }
 // Retrieve data from the CSV file and execute everything below
-d3.csv("assets/data/data.csv").then(function(healthData, err) {
+d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
   if (err) throw err;
   // parse data
-  healthData.forEach(function(data) {
-    data.Firearms Death Rate = +data.Firearms Death Rate;
+  mergedData.forEach(function(data) {
+    data.firearms_death_rate = +data.firearms_death_rate;
     data.percent_hs_grad = +data.percent_hs_grad;
-    data.2017-18 Average % = +data.2017-18 Average %;
-    data.obesity = +data.obesity;
-    data.state_code = +data.state_code;
-    data.Median Income = +data.Median Income;
+    data.per_capita_income = +data.per_capita_income;
+    data.median_income = +data.median_income;
+    data.homicide_rate = +data.homicide_rate;
+    data.household_size = +data.household_size;
     //data.abbr = data.abbr;
   });
   // xLinearScale function above csv import
-  var xLinearScale = xScale(healthData, chosenXAxis);
-  var yLinearScale = yScale(healthData, chosenYAxis);
+  var xLinearScale = xScale(mergedData, chosenXAxis);
+  var yLinearScale = yScale(mergedData, chosenYAxis);
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
@@ -138,7 +138,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     .call(leftAxis);
   // append circles
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(healthData)
+    .data(mergedData)
     .enter()
     .append("circle")
     .attr("class","stateCircle")
@@ -146,36 +146,36 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
     .attr("r", 12)
     .attr("opacity", "0.8")
-  var stateAbbr = chartGroup.selectAll("abbr")
-    .data(healthData)
-    .enter()
-    .append("text")
-    .text(d => d.abbr)
-    .classed("class","StateText")
-    .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d[chosenYAxis]))
-    .attr("font-size", "8px")
+  // var stateAbbr = chartGroup.selectAll("abbr")
+  //   .data(mergedData)
+  //   .enter()
+  //   .append("text")
+  //   .text(d => d.abbr)
+  //   .classed("class","StateText")
+  //   .attr("cx", d => xLinearScale(d[chosenXAxis]))
+  //   .attr("cy", d => yLinearScale(d[chosenYAxis]))
+  //   .attr("font-size", "8px")
   // Create group for two x-axis labels
   var labelsGroupX = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
-  var Firearms Death Rate label = labelsGroupX.append("text")
+  var firearms_death_ratelabel = labelsGroupX.append("text")
     .attr("x", 0)
     .attr("y", 20)
-    .attr("value", "Firearms Death Rate") // value to grab for event listener
+    .attr("value", "firearms_death_rate") // value to grab for event listener
     .classed("active", true)
-    .text("Firearms Death Rate (%)");
-  var state_codeLabel = labelsGroupX.append("text")
+    .text("firearms_death_rate (%)");
+  var homicide_rateLabel = labelsGroupX.append("text")
     .attr("x", 0)
     .attr("y", 40)
-    .attr("value", "state_code") // value to grab for event listener
+    .attr("value", "homicide_rate") // value to grab for event listener
     .classed("inactive", true)
-    .text("state_code: ");
-  var Median IncomeLabel = labelsGroupX.append("text")
+    .text("homicide_rate: ");
+  var household_sizeLabel = labelsGroupX.append("text")
   .attr("x", 0)
   .attr("y", 60)
-  .attr("value", "Median Income") // value to grab for event listener
+  .attr("value", "household_size") // value to grab for event listener
   .classed("inactive", true)
-  .text("Median Income: ");
+  .text("household_size: ");
   // append y axis
   var labelsGroupY = chartGroup.append("g")
     .attr("transform", "rotate(-90)")
@@ -187,18 +187,18 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     .attr("dy", "-2em")
     .classed("active", true)
     .text("% People lack percent_hs_grad");
-  var 2017-18 Average %Label = labelsGroupY.append("text") 
-  .attr("value", "2017-18 Average %")
+  var per_capita_incomeLabel = labelsGroupY.append("text") 
+  .attr("value", "per_capita_income")
   .attr("dx", "-10em")
   .attr("dy", "-4em")
   .classed("inactive", true)
-  .text("2017-18 Average %");
-  var obeseLabel = labelsGroupY.append("text") 
-  .attr("value", "obesity")
+  .text("per_capita_income");
+  var median_incomeLabel = labelsGroupY.append("text") 
+  .attr("value", "median_income")
   .attr("dx", "-10em")
   .attr("dy", "-6em")
   .classed("inactive", true)
-  .text("Obese %");
+  .text("median_income %");
   // x axis labels event listener
   labelsGroupX.selectAll("text")
     .on("click", function() {
@@ -209,7 +209,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
         chosenXAxis = xvalue;
         // functions here found above csv import
         // updates x scale for new data
-        xLinearScale = xScale(healthData, chosenXAxis);
+        xLinearScale = xScale(mergedData, chosenXAxis);
         // updates x axis with transition
         xAxis = renderAxesX(xLinearScale, xAxis);
         // updates circles with new x values
@@ -217,36 +217,36 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
         stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
-        if (chosenXAxis === "state_code") {
-          state_codeLabel
+        if (chosenXAxis === "homicide_rate") {
+          homicide_rateLabel
             .classed("active",true)
             .classed("inactive", false);
-          Firearms Death Rate Label
+          firearms_death_rateLabel
             .classed("active",false)
             .classed("inactive", true);
-          Median IncomeLabel
+          household_sizeLabel
             .classed("active",false)
             .classed("inactive", true);
         } 
-        else if(chosenXAxis === "Median Income"){
-          Median IncomeLabel
+        else if(chosenXAxis === "household_size"){
+          household_sizeLabel
             .classed("active",true)
             .classed("inactive", false);
-          Firearms Death Rate Label
+          firearms_death_rateLabel
             .classed("active",false)
             .classed("inactive", true);
-          state_codeLabel
+          homicide_rateLabel
             .classed("active",false)
             .classed("inactive", true);
         } 
         else {
-          Median IncomeLabel
+          household_sizeLabel
             .classed("active",false)
             .classed("inactive", true);
-          Firearms Death Rate Label
+          firearms_death_rateLabel
             .classed("active",true)
             .classed("inactive", false);
-          state_codeLabel
+          homicide_rateLabel
             .classed("active",false)
             .classed("inactive", true);
         }
@@ -261,7 +261,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
             chosenYAxis = yvalue;
             // functions here found above csv import
             // updates x scale for new data
-            yLinearScale = yScale(healthData, chosenYAxis);
+            yLinearScale = yScale(mergedData, chosenYAxis);
             // updates x axis with transition
             yAxis = renderAxesY(yLinearScale, yAxis);
             // updates circles with new x values
@@ -269,36 +269,36 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
             // updates tooltips with new info
             circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
             stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
-            if (chosenYAxis === "2017-18 Average %") {
-              2017-18 Average %Label
+            if (chosenYAxis === "per_capita_income") {
+              per_capita_incomeLabel
                 .classed("active",true)
                 .classed("inactive", false);
               percent_hs_gradLabel
                 .classed("active",false)
                 .classed("inactive", true);
-              obeseLabel
+              median_incomeLabel
                 .classed("active",false)
                 .classed("inactive", true);
             } 
-            else if(chosenXAxis === "obesity"){
-              2017-18 Average %Label
+            else if(chosenXAxis === "median_income"){
+              per_capita_incomeLabel
                 .classed("active",false)
                 .classed("inactive", true);
               percent_hs_gradLabel
                 .classed("active",false)
                 .classed("inactive", true);
-              obeseLabel
+              median_incomeLabel
                 .classed("active",true)
                 .classed("inactive", false);
             } 
             else {
-              2017-18 Average %Label
+              per_capita_incomeLabel
                 .classed("active",false)
                 .classed("inactive", true);
               percent_hs_gradLabel
                 .classed("active",true)
                 .classed("inactive", false);
-              obeseLabel
+              median_incomeLabel
                 .classed("active",false)
                 .classed("inactive", true);
             }
