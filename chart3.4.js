@@ -2,19 +2,15 @@ d3.json("data/merged_data1.json").then((imported_data) => {
     console.log(imported_data);
     var data = imported_data;
 
-    // Read key
     for (var key in data) {
        console.log(key);
-       console.log(data[key]);
-   }
+       console.log(data[key]);}
 
     var state_code = data.map(row => row.state_code);
     var seventeen_average = data.map(row => row.seventeen_average);
     var median_income = data.map(row => row.median_income);
     var percent_hs_grad = data.map(row => row.percent_hs_grad);
     var homicide_rate = data.map(row => row.homicide_rate);
-    // var firearms_death_rate = data.map(row => row.firearms_death_rate);
-    
 
     var trace1 = {
         x: state_code,
@@ -23,6 +19,8 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         yaxis: 'y',
         type: 'scatter',
         name: 'Homicide Rate %',
+        marker: {
+            color: 'rgb(91,166,240)'},
         connectgaps: true
       };
       
@@ -33,6 +31,8 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         yaxis: 'y2',
         type: 'scatter',
         name: 'Poverty % 2017-18',
+        marker: {
+            color: 'rgb(240,101,226)'},
         connectgaps: true
       };
       
@@ -43,6 +43,8 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         yaxis: 'y3',
         type: 'scatter',
         name: 'Median Income',
+        marker: {
+            color: 'rgb(160,32,240)'},
         connectgaps: true
       };
       var trace4 = {
@@ -52,6 +54,8 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         yaxis: 'y4',
         type: 'scatter',
         name: 'H.S Graduation %',
+        marker: {
+            color: 'rgb(74,240,85)'},
         connectgaps: true
       };
 
@@ -116,6 +120,30 @@ d3.json("data/merged_data1.json").then((imported_data) => {
           linecolor: '#636363',
           linewidth: 14
         },
+        updatemenus: [{
+            // y: 1,
+            yanchor: 'top',
+            buttons: [{
+                method: 'restyle',
+                args: ['visible', [true, false, false, false]],
+                label: 'Homicide Rate',
+                color : '#FA6363'
+            }, {
+                method: 'restyle',
+                args: ['visible', [false, true, false, false]],
+                label: 'Poverty Rate % 2017',
+                // color : '#636363',
+            }, {
+                method: 'restyle',
+                args: ['visible', [false, false, true, false]],
+                label: 'Median Income'
+            }, {
+                method: 'restyle',
+                args: ['visible', [false, false, false, true]],
+                label: 'H.S Graduation %'
+            }]
+        }],
     };      
-      Plotly.newPlot('plot', data, layout);
+// ------------------------------------------------------------------
+    Plotly.newPlot('plot', data, layout,{displayModeBar: false});     
 });
