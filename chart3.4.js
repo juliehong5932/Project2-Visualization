@@ -15,7 +15,7 @@ d3.json("data/merged_data1.json").then((imported_data) => {
     var trace1 = {
         x: state_code,
         y: homicide_rate,
-        xaxis: 'x',
+        //xaxis: 'x',
         yaxis: 'y',
         type: 'scatter',
         name: 'Homicide Rate %',
@@ -27,7 +27,7 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace2 = {
         x: state_code,
         y: seventeen_average,
-        xaxis2: 'x2',
+        //xaxis: 'x2',
         yaxis: 'y2',
         type: 'scatter',
         name: 'Poverty % 2017-18',
@@ -39,7 +39,7 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace3 = {
         x: state_code,
         y: median_income,
-        xaxis: 'x3',
+        //xaxis: 'x3',
         yaxis: 'y3',
         type: 'scatter',
         name: 'Median Income',
@@ -50,7 +50,7 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace4 = {
         x: state_code,
         y: percent_hs_grad,
-        xaxis: 'x4',
+        //xaxis: 'x4',
         yaxis: 'y4',
         type: 'scatter',
         name: 'H.S Graduation %',
@@ -65,12 +65,13 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         grid: {
           rows: 4,
           columns: 1,
-          pattern: 'dependent',
-          roworder: 'bottom to top'
+          xside: 'bottom',
+          //anchor: 'xaxis4',
+          // roworder: 'bottom to top'
         },
         legend:{
           traceorder : 'normal',
-          showlegend : 'True',
+          // showlegend : 'True',
         },
         xaxis: {
           showgrid: true,
@@ -121,18 +122,21 @@ d3.json("data/merged_data1.json").then((imported_data) => {
           linewidth: 14
         },
         updatemenus: [{
-            // y: 1,
+            y: 1,
             yanchor: 'top',
+            showlegend: true,
             buttons: [{
+                method: 'restyle',
+                args: ['visible', [true, true, true, true]],
+                label: 'All',
+            }, {
                 method: 'restyle',
                 args: ['visible', [true, false, false, false]],
                 label: 'Homicide Rate',
-                color : '#FA6363'
             }, {
                 method: 'restyle',
                 args: ['visible', [false, true, false, false]],
                 label: 'Poverty Rate % 2017',
-                // color : '#636363',
             }, {
                 method: 'restyle',
                 args: ['visible', [false, false, true, false]],
