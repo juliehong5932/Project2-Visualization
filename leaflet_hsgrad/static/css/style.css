@@ -1,0 +1,12 @@
+body {
+  padding: 25;
+  margin: 25;
+  width: "720";
+  height: "480";
+}
+
+#map,
+body,
+html {
+  height: 100%;
+}
