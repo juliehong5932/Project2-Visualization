@@ -15,7 +15,7 @@ d3.json("data/merged_data1.json").then((imported_data) => {
     var trace1 = {
         x: state_code,
         y: homicide_rate,
-        //xaxis: 'x',
+        xaxis: 'x',
         yaxis: 'y',
         type: 'scatter',
         name: 'Homicide Rate %',
@@ -27,7 +27,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace2 = {
         x: state_code,
         y: seventeen_average,
-        //xaxis: 'x2',
         yaxis: 'y2',
         type: 'scatter',
         name: 'Poverty % 2017-18',
@@ -39,7 +38,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace3 = {
         x: state_code,
         y: median_income,
-        //xaxis: 'x3',
         yaxis: 'y3',
         type: 'scatter',
         name: 'Median Income',
@@ -50,7 +48,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
       var trace4 = {
         x: state_code,
         y: percent_hs_grad,
-        //xaxis: 'x4',
         yaxis: 'y4',
         type: 'scatter',
         name: 'H.S Graduation %',
@@ -61,20 +58,16 @@ d3.json("data/merged_data1.json").then((imported_data) => {
 
       var data = [trace1, trace2, trace3, trace4];
     
+
+      
+
       var layout = {
         grid: {
           rows: 4,
           columns: 1,
           xside: 'bottom',
-          //anchor: 'xaxis4',
-          // roworder: 'bottom to top'
-        },
-        legend:{
-          traceorder : 'normal',
-          // showlegend : 'True',
         },
         xaxis: {
-          showgrid: true,
           zeroline: false,
           showline: false,
           mirror: 'ticks',
@@ -86,7 +79,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
           linewidth: 14
         },
         xaxis2: {
-          showgrid: true,
           zeroline: false,
           showline: false,
           mirror: 'ticks',
@@ -98,7 +90,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
           linewidth: 14
         },
         xaxis3: {
-          showgrid: true,
           zeroline: false,
           showline: false,
           mirror: 'ticks',
@@ -110,7 +101,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
           linewidth: 14
         },
         xaxis4: {
-          showgrid: true,
           zeroline: false,
           showline: false,
           mirror: 'ticks',
@@ -123,8 +113,6 @@ d3.json("data/merged_data1.json").then((imported_data) => {
         },
         updatemenus: [{
             y: 1,
-            yanchor: 'top',
-            showlegend: true,
             buttons: [{
                 method: 'restyle',
                 args: ['visible', [true, true, true, true]],
