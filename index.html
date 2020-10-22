@@ -1,62 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
-<head>
-  <meta charset="UTF-8">
-  <title>D3Times</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/d3Style.css">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Graduating factors</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+             crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
 
-</head>
+    <body>
+        <!-- Navigation -->
+        <div class="navigation">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" style="background-color: green;" href="index.html">Latitude</a>
+            <button class="navbar-toggler  border border-white" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ml-auto">
 
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-md-12">
-        <h1>D3Times</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12  col-md-9">
-        <div id="scatter">
-          <!-- We append our chart here. -->
+              <!-- Dropdown menu -->  
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Plots
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="Whitney.html">Interactive Scatter Plot</a>
+                    <a class="dropdown-item" href="Julie.html">Leaflet</a>
+                    <a class="dropdown-item" href="Liz.html">Plot</a>
+                  </div>
+                </li>
+                <!-- End of Dropdown menu -->
+   <!--              <li class="nav-item">
+                  <a class="nav-link" href="Comparisons.html">Comparison</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Data.html">Data</a>
+                </li>
+      
+              </ul>
+            </div>
+          </nav>
+        </div> -->
+        <!-- Content -->
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7 col-md-12">
+              <!-- box 1 -->
+              <div class="box">
+                <h3 class="title">Summary</h3>
+                <hr>
+                <img src="leaflet_hsgrad.jpg" class="vizualization rounded float-left" alt="leaflet_hsgrad">
+                <img src= "leaflet_percapita.jpg" class = "vizualization rounded float-left" alt="leaflet_percapita">
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-12">
+              <!-- box 2 -->
+              <div class="box">
+                <h5 class="title">Visualizations</h5>
+                <hr>
+      
+      
+                <div class="container">
+                  <div class="row" style="padding-bottom: 30px;">
+                    <div class="col-5">
+                      <a href="Max-Temperture.html">
+                        <img class="panel" src="Resources/assets/images/Fig1.png" alt="Max Temperature">
+                      </a>
+                    </div>
+                    <div class="col-5">
+                      <a href="Humidity.html">
+                        <img class="panel" src="Resources/assets/images/Fig2.png" alt="Humidity">
+                      </a>
+                    </div>
+                  </div>
+      
+                  <div class="row" style="padding-bottom: 30px;">
+                    <div class="col-5">
+                      <a href="Cloudiness.html">
+                        <img class="panel" src="Resources/assets/images/Fig3.png" alt="Cloudiness">
+                      </a>
+                    </div>
+                    <div class="col-5">
+                      <a href="wind.html">
+                        <img class="panel" src="Resources/assets/images/Fig4.png" alt="Wind Speed (mph)">
+                      </a>
+                    </div>
+      
+      
+                  </div>
+                </div>
+      
+      
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12  col-md-9">
-        <div class="article">
-          <h2>Correlations Discovered Between Health Risks and Age, Income</h2>
-          <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
-            quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-            ultricies mi vitae est. Mauris placerat eleifend leo.</p>
 
-          <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
-            quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-            ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-
-          <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
-            quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-            ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer-->
-  <div id="footer">
-    <p>The Coding Boot Camp&copy;2016</p>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script type="text/javascript" src="data/scatapp.js"></script>
-
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+            crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+            crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+            crossorigin="anonymous"></script>
+      
 </body>
-
 </html>
-<!-- <axis value="age">age</axis>
-<axis value="healthcare">healthcare</axis>
-<axis value="poverty">poverty</axis> -->

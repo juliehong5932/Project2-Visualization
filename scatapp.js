@@ -75,7 +75,7 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   var labelx;
   var labely;
-  if (chosenXAxis == "firearms_death_rate ") {
+  if (chosenXAxis == "firearms_death_rate") {
     labelx = "firearms_death_rate (%):";
   }
   else if(chosenXAxis == "homicide_rate") {
@@ -109,7 +109,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   return circlesGroup;
 }
 // Retrieve data from the CSV file and execute everything below
-d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
+d3.json("../data/final_merged_data.json").then(function(mergedData, err) {
   if (err) throw err;
   // parse data
   mergedData.forEach(function(data) {
@@ -121,6 +121,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
     data.household_size = +data.household_size;
     //data.abbr = data.abbr;
   });
+  console.log(mergedData)
   // xLinearScale function above csv import
   var xLinearScale = xScale(mergedData, chosenXAxis);
   var yLinearScale = yScale(mergedData, chosenYAxis);
@@ -141,7 +142,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
     .data(mergedData)
     .enter()
     .append("circle")
-    .attr("class","stateCircle")
+    .attr("class","state_codeCircle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d[chosenYAxis]))
     .attr("r", 12)
@@ -158,7 +159,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
   // Create group for two x-axis labels
   var labelsGroupX = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
-  var firearms_death_ratelabel = labelsGroupX.append("text")
+  var firearms_death_rateLabel = labelsGroupX.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "firearms_death_rate") // value to grab for event listener
@@ -169,13 +170,13 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
     .attr("y", 40)
     .attr("value", "homicide_rate") // value to grab for event listener
     .classed("inactive", true)
-    .text("homicide_rate: ");
+    .text("homicide_rate (%) ");
   var household_sizeLabel = labelsGroupX.append("text")
   .attr("x", 0)
   .attr("y", 60)
   .attr("value", "household_size") // value to grab for event listener
   .classed("inactive", true)
-  .text("household_size: ");
+  .text("household_size ");
   // append y axis
   var labelsGroupY = chartGroup.append("g")
     .attr("transform", "rotate(-90)")
@@ -186,7 +187,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
     .attr("dx", "-10em")
     .attr("dy", "-2em")
     .classed("active", true)
-    .text("% People lack percent_hs_grad");
+    .text("percent_hs_grad (%)");
   var per_capita_incomeLabel = labelsGroupY.append("text") 
   .attr("value", "per_capita_income")
   .attr("dx", "-10em")
@@ -216,7 +217,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
-        stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+        //stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
         if (chosenXAxis === "homicide_rate") {
           homicide_rateLabel
             .classed("active",true)
@@ -240,12 +241,12 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
             .classed("inactive", true);
         } 
         else {
-          household_sizeLabel
-            .classed("active",false)
-            .classed("inactive", true);
           firearms_death_rateLabel
             .classed("active",true)
             .classed("inactive", false);
+          household_sizeLabel
+            .classed("active",false)
+            .classed("inactive", true);
           homicide_rateLabel
             .classed("active",false)
             .classed("inactive", true);
@@ -268,7 +269,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
             circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
             // updates tooltips with new info
             circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
-            stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+            //stateAbbr = renderStateAbbr(stateAbbr, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
             if (chosenYAxis === "per_capita_income") {
               per_capita_incomeLabel
                 .classed("active",true)
@@ -280,7 +281,7 @@ d3.json("../../data/merged_data1.1json").then(function(mergedData, err) {
                 .classed("active",false)
                 .classed("inactive", true);
             } 
-            else if(chosenXAxis === "median_income"){
+            else if(chosenYAxis === "median_income"){
               per_capita_incomeLabel
                 .classed("active",false)
                 .classed("inactive", true);
