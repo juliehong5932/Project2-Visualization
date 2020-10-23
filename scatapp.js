@@ -109,7 +109,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   return circlesGroup;
 }
 // Retrieve data from the CSV file and execute everything below
-d3.json("../data/final_merged_data.json").then(function(mergedData, err) {
+d3.json("data/final_merged_data.json").then(function(mergedData, err) {
   if (err) throw err;
   // parse data
   mergedData.forEach(function(data) {
