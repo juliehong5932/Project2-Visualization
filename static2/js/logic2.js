@@ -14,7 +14,7 @@ var myMap = L.map("map", {
   }).addTo(myMap);
   
   // Use this link to get the geojson data.
-  var link = "static/data/merged_state_data.geojson";
+  var link = "static2/data/merged_state_data.geojson";
   // var link = "static/data/statedata.geojson";
   
   
