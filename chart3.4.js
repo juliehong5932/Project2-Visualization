@@ -1,4 +1,4 @@
-d3.json("../data/final_merged_data.json").then((imported_data) => {
+d3.json("data/final_merged_data.json").then((imported_data) => {
     console.log(imported_data);
     var data = imported_data;
 
