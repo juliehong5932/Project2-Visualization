@@ -1,4 +1,4 @@
-d3.json("merged_data1.1.json").then((imported_data) => {
+d3.json("../data/final_merged_data.json").then((imported_data) => {
     console.log(imported_data);
     var data = imported_data;
 
@@ -11,7 +11,7 @@ d3.json("merged_data1.1.json").then((imported_data) => {
     var median_income = data.map(row => row.median_income);
     var percent_hs_grad = data.map(row => row.percent_hs_grad);
     var homicide_rate = data.map(row => row.homicide_rate);
-
+   //console.log(homicide_rate);
     var trace1 = {
         x: state_code,
         y: homicide_rate,
